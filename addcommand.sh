@@ -9,5 +9,5 @@ fi
 
 COMMAND=$1
 
-cp -v /bin/$COMMAND $D/bin
+cp -va /bin/$COMMAND $D/bin
 ldd /bin/$COMMAND | awk '/=>/ {print $1}' | xargs -I '{}' cp '/lib/x86_64-linux-gnu/{}' $D/lib/
