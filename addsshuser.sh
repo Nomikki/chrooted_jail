@@ -31,7 +31,7 @@ mkdir -p $D/etc/
 cp -f /etc/passwd $D/etc/
 cp -f /etc/group $D/etc/
 
-#create home dir
+#create new home dir
 mkdir -p $D/home/$NEW_USER
 chown -R $NEW_USER:$NEW_USER $D/home/$NEW_USER
 chown -R 0700 $D/home/$NEW_USER
