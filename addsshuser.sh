@@ -10,14 +10,14 @@ D=$(cat vars.txt)
 
 if grep -qE "^Match User" /etc/ssh/sshd_config; then
     if grep -qE "^Match User.*\<$NEW_USER\>" /etc/ssh/sshd_config; then
-        echo "User is already in list"
+        echo "User '$NEW_USER' is already in list"
         exit 1
     fi
 fi
 
 if ! grep -qE "^Match User" /etc/ssh/sshd_config; then
     # create match user -list with new user
-    adduser --gecos GECOS $NEW_USER
+    adduser --gecos $NEW_USER
 
     echo "Match User $NEW_USER" | sudo tee -a /etc/ssh/sshd_config
     echo "ChrootDirectory $D" | sudo tee -a /etc/ssh/sshd_config
@@ -35,5 +35,6 @@ cp -f /etc/group $D/etc/
 mkdir -p $D/home/$NEW_USER
 chown -R $NEW_USER:$NEW_USER $D/home/$NEW_USER
 chown -R 0700 $D/home/$NEW_USER
+chown $NEW_USER $D/home/$NEW_USER
 
 systemctl restart ssh.service
